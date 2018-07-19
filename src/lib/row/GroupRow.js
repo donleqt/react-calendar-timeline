@@ -6,37 +6,25 @@ class GroupRow extends Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     onDoubleClick: PropTypes.func.isRequired,
-    onContextMenu: PropTypes.func.isRequired,
     isEvenRow: PropTypes.bool.isRequired,
     style: PropTypes.object.isRequired,
-    clickTolerance: PropTypes.number.isRequired,
-    group: PropTypes.object.isRequired,
-    horizontalLineClassNamesForGroup: PropTypes.func
+    clickTolerance: PropTypes.number.isRequired
   }
 
   render() {
     const {
-      onContextMenu,
       onDoubleClick,
       isEvenRow,
       style,
       onClick,
-      clickTolerance,
-      horizontalLineClassNamesForGroup,
-      group
+      clickTolerance
     } = this.props
-
-    let classNamesForGroup = [];
-    if (horizontalLineClassNamesForGroup) {
-      classNamesForGroup = horizontalLineClassNamesForGroup(group);
-    }
 
     return (
       <PreventClickOnDrag clickTolerance={clickTolerance} onClick={onClick}>
         <div
-          onContextMenu={onContextMenu}
           onDoubleClick={onDoubleClick}
-          className={(isEvenRow ? 'rct-hl-even ' : 'rct-hl-odd ') + (classNamesForGroup ? classNamesForGroup.join(' ') : '')}
+          className={isEvenRow ? 'rct-hl-even' : 'rct-hl-odd'}
           style={style}
         />
       </PreventClickOnDrag>

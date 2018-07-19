@@ -32,5 +32,3 @@ export function keyBy(value, key) {
 
   return obj
 }
-
-export function noop() {}

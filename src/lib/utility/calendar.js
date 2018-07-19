@@ -1,13 +1,6 @@
 import moment from 'moment'
 import { _get } from './generic'
 
-/**
- * Calculate the ms / pixel ratio of the timeline state
- * @param {number} canvasTimeStart
- * @param {number} canvasTimeEnd
- * @param {number} canvasWidth
- * @returns {number}
- */
 export function coordinateToTimeRatio(
   canvasTimeStart,
   canvasTimeEnd,
@@ -16,15 +9,6 @@ export function coordinateToTimeRatio(
   return (canvasTimeEnd - canvasTimeStart) / canvasWidth
 }
 
-/**
- * For a given time, calculate the pixel position given timeline state
- * (timeline width in px, canvas time range)
- * @param {number} canvasTimeStart
- * @param {number} canvasTimeEnd
- * @param {number} canvasWidth
- * @param {number} time
- * @returns {number}
- */
 export function calculateXPositionForTime(
   canvasTimeStart,
   canvasTimeEnd,
@@ -35,28 +19,6 @@ export function calculateXPositionForTime(
   const timeOffset = time - canvasTimeStart
 
   return timeOffset * widthToZoomRatio
-}
-
-/**
- * For a given x position (leftOffset) in pixels, calculate time based on
- * timeline state (timeline width in px, canvas time range)
- * @param {number} canvasTimeStart
- * @param {number} canvasTimeEnd
- * @param {number} canvasWidth
- * @param {number} leftOffset
- * @returns {number}
- */
-export function calculateTimeForXPosition(
-  canvasTimeStart,
-  canvasTimeEnd,
-  canvasWidth,
-  leftOffset
-) {
-  const timeToPxRatio = (canvasTimeEnd - canvasTimeStart) / canvasWidth
-
-  const timeFromCanvasTimeStart = timeToPxRatio * leftOffset
-
-  return timeFromCanvasTimeStart + canvasTimeStart
 }
 
 export function iterateTimes(start, end, unit, timeSteps, callback) {
@@ -247,9 +209,8 @@ export function collision(a, b, lineHeight, collisionPadding = EPSILON) {
   )
 }
 
-export function stack(items, groupOrders, lineHeight, groups) {
+export function stack(items, groupOrders, lineHeight) {
   var i, iMax
-  var k = 0
   var totalHeight = 0
 
   var groupHeights = []
@@ -258,8 +219,6 @@ export function stack(items, groupOrders, lineHeight, groups) {
   var groupedItems = getGroupedItems(items, groupOrders)
 
   groupedItems.forEach(function(group) {
-    var groupVal = groups[k++];
-
     // calculate new, non-overlapping positions
     groupTops.push(totalHeight)
 
@@ -301,13 +260,8 @@ export function stack(items, groupOrders, lineHeight, groups) {
       }
     }
 
-    if (groupVal.height) {
-      groupHeights.push(groupVal.height)
-      totalHeight += groupVal.height
-    } else {
-      groupHeights.push(Math.max(groupHeight + verticalMargin, lineHeight))
-      totalHeight += Math.max(groupHeight + verticalMargin, lineHeight)
-    }
+    groupHeights.push(Math.max(groupHeight + verticalMargin, lineHeight))
+    totalHeight += Math.max(groupHeight + verticalMargin, lineHeight)
   })
   return {
     height: totalHeight,
@@ -316,8 +270,8 @@ export function stack(items, groupOrders, lineHeight, groups) {
   }
 }
 
-export function nostack(items, groupOrders, lineHeight, groups) {
-  var i, j=0, iMax
+export function nostack(items, groupOrders, lineHeight) {
+  var i, iMax
 
   var totalHeight = 0
 
@@ -327,8 +281,6 @@ export function nostack(items, groupOrders, lineHeight, groups) {
   var groupedItems = getGroupedItems(items, groupOrders)
 
   groupedItems.forEach(function(group) {
-    var groupVal = groups[j++];
-
     // calculate new, non-overlapping positions
     groupTops.push(totalHeight)
 
@@ -343,13 +295,8 @@ export function nostack(items, groupOrders, lineHeight, groups) {
       }
     }
 
-    if (groupVal.height) {
-      groupHeights.push(groupVal.height);
-      totalHeight += groupVal.height;
-    } else {
-      groupHeights.push(Math.max(groupHeight, lineHeight))
-      totalHeight += Math.max(groupHeight, lineHeight)
-    }
+    groupHeights.push(Math.max(groupHeight, lineHeight))
+    totalHeight += Math.max(groupHeight, lineHeight)
   })
   return {
     height: totalHeight,

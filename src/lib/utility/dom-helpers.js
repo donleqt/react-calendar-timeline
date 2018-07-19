@@ -1,5 +1,4 @@
 // TODO: can we use getBoundingClientRect instead??
-// last place this is used is in "handleWheel" in ScrollElement
 export function getParentPosition(element) {
   var xPosition = 0
   var yPosition = 0

@@ -926,3 +926,33 @@ npm version patch
 ```
 
 -->
+
+### ranges
+Expects either a vanilla JS array or an immutableJS array, consisting of objects with the following attributes:
+```
+{
+  id: 1,
+  start_time: 1457902922261,
+  end_time: 1457902922261 + 86400000,
+  className: 'weekend',
+}
+```
+
+
+### keys
+An array specifying keys in the `items`, `groups` and `ranges` objects. Defaults to
+```
+{
+  groupIdKey: 'id',
+  groupTitleKey: 'title',
+  itemIdKey: 'id',
+  itemTitleKey: 'title',    // key for item div content
+  itemDivTitleKey: 'title', // key for item div title (<div title="text"/>)
+  itemGroupKey: 'group',
+  itemTimeStartKey: 'start_time',
+  itemTimeEndKey: 'end_time'
+  rangeIdKey: 'id',
+  rangeTimeStartKey: 'start_time',
+  rangeTimeEndKey: 'end_time'
+}
+```

@@ -10,6 +10,10 @@ class ScrollElement extends Component {
     traditionalZoom: PropTypes.bool.isRequired,
     scrollRef: PropTypes.func.isRequired,
     isInteractingWithItem: PropTypes.bool.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseMove: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired,
+    onContextMenu: PropTypes.func.isRequired,
     onZoom: PropTypes.func.isRequired,
     onWheelZoom: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired
@@ -27,6 +31,7 @@ class ScrollElement extends Component {
     this.props.scrollRef(el)
   }
 
+  // TODO: fix this where this is called when scrollLeft is set
   handleScroll = () => {
     const { width } = this.props
     const scrollComponent = this.scrollComponent
@@ -92,7 +97,7 @@ class ScrollElement extends Component {
   }
 
   handleMouseMove = e => {
-    // this.props.onMouseMove(e)
+    this.props.onMouseMove(e)
     //why is interacting with item important?
     if (this.state.isDragging && !this.props.isInteractingWithItem) {
       this.scrollComponent.scrollLeft += this.dragLastPosition - e.pageX
@@ -109,8 +114,8 @@ class ScrollElement extends Component {
     })
   }
 
-  handleMouseLeave = () => {
-    // this.props.onMouseLeave(e)
+  handleMouseLeave = e => {
+    this.props.onMouseLeave(e)
     this.dragStartPosition = null
     this.dragLastPosition = null
     this.setState({
@@ -188,20 +193,19 @@ class ScrollElement extends Component {
   }
 
   render() {
-    const { width, height, children } = this.props
+    const { width, height, children, onContextMenu, onMouseEnter } = this.props
     const { isDragging } = this.state
 
     const scrollComponentStyle = {
       width: `${width}px`,
       height: `${height + 20}px`, //20px to push the scroll element down off screen...?
-      cursor: isDragging ? 'move' : 'default',
-      position: 'relative'
+      cursor: isDragging ? 'move' : 'default'
     }
 
     return (
       <div
         ref={this.refHandler}
-        data-testid="scroll-element"
+        data-test-id="scroll-element"
         className="rct-scroll"
         style={scrollComponentStyle}
         onScroll={this.handleScroll}
@@ -213,6 +217,8 @@ class ScrollElement extends Component {
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
         onTouchEnd={this.handleTouchEnd}
+        onContextMenu={onContextMenu}
+        onMouseEnter={onMouseEnter}
       >
         {children}
       </div>
