@@ -11,8 +11,8 @@ export default class Ranges extends Component {
     headerHeight: PropTypes.number.isRequired,
     keys: PropTypes.object.isRequired,
     ranges: PropTypes.array.isRequired,
-    visibleTimeStart: PropTypes.number.isRequired,
-    visibleTimeEnd: PropTypes.number.isRequired
+    visibleTimeStart: PropTypes.any.isRequired,
+    visibleTimeEnd: PropTypes.any.isRequired
   }
 
   shouldComponentUpdate (nextProps, nextState) {
