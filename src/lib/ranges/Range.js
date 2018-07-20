@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { _get } from '../utility/generic'
+
 export default class Range extends Component {
   static propTypes = {
-    canvasTimeStart: React.PropTypes.number.isRequired,
-    canvasTimeEnd: React.PropTypes.number.isRequired,
-    canvasWidth: React.PropTypes.number.isRequired,
-    height: React.PropTypes.number.isRequired,
-    headerHeight: React.PropTypes.number.isRequired,
-    keys: React.PropTypes.object.isRequired,
-    range: React.PropTypes.object.isRequired
+    canvasTimeStart: PropTypes.number.isRequired,
+    canvasTimeEnd: PropTypes.number.isRequired,
+    canvasWidth: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    headerHeight: PropTypes.number.isRequired,
+    keys: PropTypes.object.isRequired,
+    range: PropTypes.object.isRequired
   }
 
   constructor (props) {
