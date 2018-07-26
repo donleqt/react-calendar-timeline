@@ -482,6 +482,10 @@ export default class Item extends Component {
   }
 
   actualClick(e, clickType) {
+    // prevent catching the right click
+    if (e.button && e.button === 2) {
+      return;
+    }
     if (this.props.canSelect && this.props.onSelect) {
       this.props.onSelect(this.itemId, clickType, e)
     }
